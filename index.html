@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Números Romanos</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        #particles-js {
+            background: rgb(22, 2, 54);
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            z-index: -1;
+        }
+
+        .centro-horizontal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .centro {
+            text-align: center;
+        }
+    </style>
+
+<script>
+  // Definição de uma classe JavaScript para realizar conversões entre números romanos e reais
+    class ConversorRomano {
+        constructor() {
+            // Mapeando os valores em números romanos
+            this.valores = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            this.simbolos = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+            this.valoresRomanos = { "I": 1, "IV": 4, "V": 5, "IX": 9, "X": 10, "XL": 40, "L": 50, "XC": 90, "C": 100, "CD": 400, "D": 500, "CM": 900, "M": 1000 };
+        }
+
+          // Método para converter números reais para romanos:
+        converterParaRomano(numero) {
+            let numeroRomano = "";
+
+            for (let i = 0; i < this.valores.length; i++) {
+                while (numero >= this.valores[i]) {
+                    numeroRomano += this.simbolos[i];
+                    numero -= this.valores[i];
+                }
+            }
+
+            return numeroRomano;
+        }
+ // Método para converter números romanos para reais
+        converterParaReal(romano) {
+            const romanoUpper = romano.toUpperCase();
+            let resultadoReal = 0;
+
+            for (let i = 0; i < romanoUpper.length; i++) {
+                const atual = this.valoresRomanos[romanoUpper[i]];
+                const proximo = this.valoresRomanos[romanoUpper[i + 1]];
+
+                if (proximo > atual) {
+                    resultadoReal += (proximo - atual);
+                    i++;
+                } else {
+                    resultadoReal += atual;
+                }
+            }
+
+            return resultadoReal;
+        }
+    }
+      // Instância da classe ConversorRomano
+        const conversor = new ConversorRomano();
+
+        function converterEExibir() {
+            // Obtenção do número real a ser convertido
+            const numeroReal = document.getElementById("numeroReal").value;
+             // Verifica se o número é maior que 3999
+    if (Number(numeroReal) > 3999) {
+        alert("Por favor, insira um valor menor que 3999.");
+        return;
+    }
+            
+            // Conversão do número real para romano
+            const resultadoRomano = conversor.converterParaRomano(Number(numeroReal));
+              // Exibição do resultado romano
+            document.getElementById("resultadoRomano").innerHTML = `Número Romano: ${resultadoRomano}`;
+
+            // Abaixo ele faz a mesma coisa
+            const numeroRomano = document.getElementById("numeroRomano").value;
+             // Verifica se o número romano é maior que 3999
+    if (conversor.converterParaReal(numeroRomano) > 3999) {
+        alert("Por favor, insira um valor menor que 3999.");
+        return;
+    }
+            const resultadoReal = conversor.converterParaReal(numeroRomano);
+            document.getElementById("resultadoReal").innerHTML = `Número Real: ${resultadoReal}`;
+        }
+    </script>
+</head>
+
+<body>
+
+<header>
+    <h1>Conversor de Números Romanos</h1>
+</header>
+
+<!-- Adiciona a classe para centralizar os elementos horizontalmente -->
+<section class="centro-horizontal">
+    <h2 for="numeroReal">Insira um número real:</h2>
+    <p class="centro">(de 1 a 3999)</p>
+
+    <input class="centro" type="number" id="numeroReal">
+    <button class="centro" onclick="converterEExibir()">Converter para Romano</button>
+    <p class="centro" id="resultadoRomano"></p>
+</section>
+
+<section class="centro-horizontal">
+    <h2 for="numeroRomano">Insira um número romano:</h2>
+    <p class="centro">(de 1 a 3999)</p>
+
+    <input class="centro" type="text" id="numeroRomano">
+    <button class="centro" onclick="converterEExibir()">Converter para Real</button>
+    <p class="centro" id="resultadoReal"></p>
+</section>
+
+<!-- Abaixo segue a animação front-end--> 
+<div id="particles-js"></div>
+
+<script src="particles.min.js"></script>
+<script>particlesJS({
+    "particles": {
+      "number": {
+        "value": 183,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 1.5782952832645452,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 55.94405594405595,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  })</script>
+
+
+</body>
+
+<footer>
+    <span>
+        Projeto de processo seletivo -  &copy; Danilo Medeiros, 2023, Todos os direitos reservados.
+    </span>
+</footer>
+
+</html>
